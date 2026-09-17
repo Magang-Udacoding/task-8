@@ -30,20 +30,20 @@ class ItemController extends Controller
             'stock'       => 'nullable|integer|min:0',
         ]);
 
-        $item = Item::create($validated);
+        $items = Item::create($validated);
 
         return response()->json([
             'message' => 'Item Created!',
-            'data'    => $item->load('category'),
+            'data'    => $items->load('category'),
         ], 201);
     }
 
     // GET /api/items/{id}
     public function show(string $id): JsonResponse
     {
-        $item = Item::with('category')->find($id);
+        $items = Item::with('category')->find($id);
 
-        if (!$item) {
+        if (!$items) {
             return response()->json([
                 'message' => 'Item Not Found!',
             ], 404);
@@ -51,16 +51,16 @@ class ItemController extends Controller
 
         return response()->json([
             'message' => 'Item Detail...',
-            'data'    => $item,
+            'data'    => $items,
         ], 200);
     }
 
     // PUT/PATCH /api/items/{id}
     public function update(Request $request, string $id): JsonResponse
     {
-        $item = Item::find($id);
+        $items = Item::find($id);
 
-        if (!$item) {
+        if (!$items) {
             return response()->json([
                 'message' => 'Item Not Found!',
             ], 404);
@@ -73,26 +73,26 @@ class ItemController extends Controller
             'stock'       => 'nullable|integer|min:0',
         ]);
 
-        $item->update($validated);
+        $items->update($validated);
 
         return response()->json([
             'message' => 'Item Updated!',
-            'data'    => $item->load('category'),
+            'data'    => $items->load('category'),
         ], 200);
     }
 
     // DELETE /api/items/{id}
     public function destroy(string $id): JsonResponse
     {
-        $item = Item::find($id);
+        $items = Item::find($id);
 
-        if (!$item) {
+        if (!$items) {
             return response()->json([
                 'message' => 'Item Not Found!',
             ], 404);
         }
 
-        $item->delete();
+        $items->delete();
 
         return response()->json([
             'message' => 'Item Deleted!',
