@@ -37,7 +37,8 @@ class CategoryController extends Controller
 
         $category = Category::create($validated);
         return response()->json([
-            'message' => 'Category Created!'
+            'message' => 'Category Created!',
+            'data' => $category,
         ], 201);
     }
 
@@ -79,7 +80,7 @@ class CategoryController extends Controller
         }
 
         $validated = $request->validate([
-            'name'        => 'sometimes|string|max:255|unique:categories,name,' . $id,
+            'name'        => 'sometimes|string|max:255|unique:categories,name' . $id,
             'description' => 'nullable|string',
         ]);
 
